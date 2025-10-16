@@ -1,19 +1,10 @@
-CC = cc
-CFLAGS = -Wall
-LIBS = -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
-TARGET = test
-SOURCE = test.c
+	# --- Configuration Variables ---
+CC      = gcc
+CFLAGS  =  # Added -Wextra for more warnings, -g for debugging
+LDFLAGS = -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
+TARGET  = main 
+SOURCES = main.c Generics.c
 
-# Primary target: 'test' depends on 'test.c'
-# The command runs the compiler with flags, specifies the output file (-o $(TARGET)), 
-# and links the necessary Raylib libraries.
-$(TARGET): $(SOURCE)
-	$(CC) $(CFLAGS) $(SOURCE) -o $(TARGET) $(LIBS)
-
-# Phony target: A command that is not a file
-.PHONY: clean
-
-# Removes the compiled binary
-clean:
-	rm -f $(TARGET)
+main:
+	gcc  main.c Generics.c -Wall -Wextra -g -lraylib -lGL -lm -lpthread -ldl -lrt -lX11 -o main
 
