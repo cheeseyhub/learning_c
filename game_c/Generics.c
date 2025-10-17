@@ -1,5 +1,6 @@
 #include "./Generics.h"
-#include <stdio.h>
+#include <math.h>
+#include <raylib.h>
 
 void GenericControls(struct movementComponent *o) {
   o->up = IsKeyDown(KEY_UP);
@@ -8,18 +9,21 @@ void GenericControls(struct movementComponent *o) {
   o->right = IsKeyDown(KEY_RIGHT);
 }
 void GenericMovement(struct movementComponent *o, float *posX, float *posY,
-                     float *deltaTime) {
-  int distance = o->velocity * *deltaTime;
-  if (o->up) {
-    *posY -= distance;
-  }
-  if (o->down) {
-    *posY += distance;
-  }
+                     float *deltaTime, float *rotation) {
+  float distance = o->velocity * *deltaTime;
   if (o->left) {
-    *posX -= distance;
+    *rotation -= 1 * distance;
   }
   if (o->right) {
-    *posX += distance;
+    *rotation += 1 * distance;
+  }
+  float rad = *rotation * (PI / 180);
+  if (o->up) {
+    *posX += sinf(rad) * distance;
+    *posY -= cosf(rad) * distance;
+  }
+  if (o->down) {
+    *posX -= sinf(rad) * distance;
+    *posY += cosf(rad) * distance;
   }
 }

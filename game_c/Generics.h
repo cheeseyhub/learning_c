@@ -8,4 +8,4 @@ struct movementComponent {
 };
 void GenericControls(struct movementComponent *o);
 void GenericMovement(struct movementComponent *o, float *posX, float *posY,
-                     float *deltaTime);
+                     float *deltaTime, float *rotation);
