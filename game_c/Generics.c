@@ -11,10 +11,10 @@ void GenericControls(struct movementComponent *o) {
 void GenericMovement(struct movementComponent *o, float *posX, float *posY,
                      float *deltaTime, float *rotation) {
   float distance = o->velocity * *deltaTime;
-  if (o->left) {
+  if (o->left && o->up) {
     *rotation -= 1 * distance;
   }
-  if (o->right) {
+  if (o->right && o->up) {
     *rotation += 1 * distance;
   }
   float rad = *rotation * (PI / 180);

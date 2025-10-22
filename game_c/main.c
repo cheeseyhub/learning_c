@@ -1,6 +1,9 @@
 #include "./Generics.h"
+#include "./utility.h"
+#include <math.h>
 #include <raylib.h>
 #include <rlgl.h>
+#include <stdlib.h>
 
 // Structure of Car
 typedef struct {
@@ -11,48 +14,91 @@ typedef struct {
   Color color;
   struct movementComponent move;
   float rotation;
-} Car;
+} Position;
 
 int main(void) {
   int windowWidth = 1366;
   int windowHeight = 768;
 
   InitWindow(windowWidth, windowHeight, "Game");
-  Image pickachue = LoadImage("./textures/pickachue.png");
-  ImageResize(&pickachue, 50, 50);
-  Texture2D pickachueTexture = LoadTextureFromImage(pickachue);
 
-  Car car = {windowWidth / (float)2,
-             windowHeight / (float)2,
-             10,
-             20,
-             BLACK,
-             {.velocity = 100},
-             0};
+  // Character
+  Image aeroplane = LoadImage("./textures/aeroplane.png");
+  ImageResize(&aeroplane, 50, 50);
+  Texture2D aeroplaneTexture = LoadTextureFromImage(aeroplane);
+
+  // Enemy
+  Texture2D enemyTexture = LoadTextureFromImage(aeroplane);
+
+  Position aeroplanePos = {windowWidth / (float)2,
+                           windowHeight / (float)2,
+                           50,
+                           70,
+                           BLACK,
+                           {.velocity = 100},
+                           0};
+
+  // Character
+
+  // Enemy
+  Position aeroplaneEnemyPos = {(float)(rand() % windowWidth),
+                                10.0f,
+                                50,
+                                70,
+                                BLACK,
+                                {.velocity = 100},
+                                0};
 
   while (WindowShouldClose() == false) {
     float deltaTime = GetFrameTime();
 
-    GenericControls(&car.move);
-    GenericMovement(&car.move, &car.posX, &car.posY, &deltaTime, &car.rotation);
+    // Player Controls
+    GenericControls(&aeroplanePos.move);
+    GenericMovement(&aeroplanePos.move, &aeroplanePos.posX, &aeroplanePos.posY,
+                    &deltaTime, &aeroplanePos.rotation);
+
+    // Calculating the distance vector
+    struct coords enemy =
+        calculate_distance(aeroplanePos.posX, aeroplaneEnemyPos.posX,
+                           aeroplanePos.posY, aeroplaneEnemyPos.posY);
+
+    // Enemy Movement
+    float enemyAngleRad = atan2(enemy.y, enemy.x);
+    aeroplaneEnemyPos.posX +=
+        cos(enemyAngleRad) * aeroplaneEnemyPos.move.velocity * deltaTime;
+    aeroplaneEnemyPos.posY +=
+        sin(enemyAngleRad) * aeroplaneEnemyPos.move.velocity * deltaTime;
 
     BeginDrawing();
     ClearBackground(RAYWHITE);
+
+    // Player translation logic
     rlPushMatrix();
+    rlTranslatef(aeroplanePos.posX + aeroplanePos.width / 2.0f,
+                 aeroplanePos.posY + aeroplanePos.height / 2.0f, 0.0f);
+    rlRotatef(aeroplanePos.rotation, 0.0f, 0.0f, 1.0f);
 
-    rlTranslatef(car.posX + car.width / 2.0f, car.posY + car.height / 2.0f,
+    DrawTexture(aeroplaneTexture, -aeroplanePos.width / 2.0f,
+                -aeroplanePos.height / 2.0f, WHITE);
+
+    rlPopMatrix();
+
+    // Enemy translation logic
+    rlPushMatrix();
+    rlTranslatef(aeroplaneEnemyPos.posX + aeroplaneEnemyPos.width / 2.0f,
+                 aeroplaneEnemyPos.posY + aeroplaneEnemyPos.height / 2.0f,
                  0.0f);
-    rlRotatef(car.rotation, 0.0f, 0.0f, 1.0f);
 
-    DrawRectangle(-car.width / 2, -car.height / 2, car.width, car.height,
-                  car.color);
-    DrawTexture(pickachueTexture, 100, 100, WHITE);
+    rlRotatef(enemy.angle, 0.0f, 0.0f, 1.0f);
+
+    DrawTexture(enemyTexture, -aeroplaneEnemyPos.width / 2.0f,
+                -aeroplaneEnemyPos.height / 2.0f, WHITE);
 
     rlPopMatrix();
     EndDrawing();
   }
 
-  UnloadImage(pickachue);
+  UnloadImage(aeroplane);
   CloseWindow();
 
   return 0;
