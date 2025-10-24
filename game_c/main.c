@@ -5,7 +5,6 @@
 #include <rlgl.h>
 #include <stdlib.h>
 
-// Structure of Car
 typedef struct {
   float posX;
   float posY;
@@ -63,7 +62,8 @@ int main(void) {
                            aeroplanePos.posY, aeroplaneEnemyPos.posY);
 
     // Enemy Movement
-    float enemyAngleRad = atan2(enemy.y, enemy.x);
+    float enemyAngleRad = atan2f(enemy.y, enemy.x);
+
     aeroplaneEnemyPos.posX +=
         cos(enemyAngleRad) * aeroplaneEnemyPos.move.velocity * deltaTime;
     aeroplaneEnemyPos.posY +=
@@ -74,8 +74,9 @@ int main(void) {
 
     // Player translation logic
     rlPushMatrix();
-    rlTranslatef(aeroplanePos.posX + aeroplanePos.width / 2.0f,
-                 aeroplanePos.posY + aeroplanePos.height / 2.0f, 0.0f);
+    rlTranslatef((aeroplanePos.posX + aeroplanePos.width / 2.0f),
+                 (aeroplanePos.posY + aeroplanePos.height / 2.0f), 0.0f);
+
     rlRotatef(aeroplanePos.rotation, 0.0f, 0.0f, 1.0f);
 
     DrawTexture(aeroplaneTexture, -aeroplanePos.width / 2.0f,

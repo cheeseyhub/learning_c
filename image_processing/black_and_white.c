@@ -4,6 +4,17 @@
 
 #define MAX_SIZE (16 * 1024 * 1024)
 
+void validate(int val, const char *msg) {
+  if (!val) {
+    fprintf(stderr, "Invalid file : %s \n");
+    exit(1);
+  }
+}
+void check_header(const char *buffer) {
+  validate((unsigned char)buffer[0] == 0x89, "header byte 1");
+  validate((unsigned char)buffer[1] == 'P', "header byte 2");
+}
+
 // Takes two arguments  input file and output file
 int main(int argc, char **argv) {
 

@@ -8,7 +8,7 @@ struct coords calculate_distance(float playerX, float enemyX, float playerY,
   distance.x = playerX - enemyX;
   distance.y = playerY - enemyY;
 
-  distance.angle = atan2(distance.y, distance.x) * (180 / M_PI);
+  distance.angle = atan2f(distance.y, distance.x) * (180 / M_PI);
 
   return distance;
 }
