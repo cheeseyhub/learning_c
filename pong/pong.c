@@ -1,3 +1,4 @@
+#include <math.h>
 #include <raylib.h>
 
 struct Paddle {
@@ -22,14 +23,33 @@ void ballMovement(struct Ball *ball, float deltaTime, int windowWidth,
   if (ball->y + ball->radius > windowHeight || ball->y - ball->radius < 0) {
     ball->velocityY *= -1;
   }
-  if (ball->x + ball->radius > windowWidth || ball->x - ball->radius < 0) {
-    ball->velocityX *= -1;
-  }
   float velocityX = ball->velocityX * deltaTime;
   float velocityY = ball->velocityY * deltaTime;
 
   ball->x += velocityX;
   ball->y += velocityY;
+};
+int distance_formula(struct Ball *ball, struct Paddle *paddle) {
+
+  int topLeftX = paddle->x;
+  int topLeftY = paddle->y;
+
+  int topRightX = paddle->x + paddle->width;
+  int topRightY = paddle->y;
+
+  int bottomLeftX = paddle->x;
+  int bottomLeftY = paddle->y + paddle->height;
+
+  int bottomRightX = paddle->x + paddle->width;
+  int bottomRightY = paddle->y + paddle->height;
+}
+
+void paddleBallCollision(struct Ball *ball, struct Paddle *paddle,
+                         float deltaTime, int windowWidth, int windowHeight) {
+
+  if (distance_formula(ball, paddle) == 1) {
+    ball->velocityX *= -1;
+  }
 };
 
 void enemyPaddleMovement(struct Paddle *paddle, float windowWidth) {
@@ -55,8 +75,8 @@ int main() {
   int windowWidth = 1366;
   int windowHeight = 768;
 
-  int paddlesWidth = 10;
-  int paddlesHeight = 50;
+  int paddlesWidth = 30;
+  int paddlesHeight = 80;
 
   InitWindow(windowWidth, windowHeight, "Pong Game");
 
@@ -66,14 +86,13 @@ int main() {
   // Paddle two
   struct Paddle paddleTwo = {windowWidth - paddlesWidth, 0, paddlesWidth,
                              paddlesHeight};
-
   paddle.velocity = 100;
   paddleTwo.velocity = 100;
 
   // Ball
-  struct Ball ball = {windowWidth / 2.0, windowHeight / 2.0, 10};
-  ball.velocityX = 100;
-  ball.velocityY = 100;
+  struct Ball ball = {windowWidth / 2.0, windowHeight / 2.0, 3};
+  ball.velocityX = -100;
+  ball.velocityY = -100;
 
   while (WindowShouldClose() == false) {
 
@@ -84,6 +103,11 @@ int main() {
 
     // PLAYER PADDLE MOVEMENT
     playerPaddleMovement(&paddle, windowWidth, deltaTime);
+
+    // Collision
+    paddleBallCollision(&ball, &paddle, deltaTime, windowWidth, windowHeight);
+    paddleBallCollision(&ball, &paddleTwo, deltaTime, windowWidth,
+                        windowHeight);
     BeginDrawing();
 
     // ClearBackground
