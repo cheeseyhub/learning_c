@@ -1,5 +1,7 @@
 #include <math.h>
 #include <raylib.h>
+#include <stdlib.h>
+#include <time.h>
 
 struct Paddle {
   float x;
@@ -31,33 +33,58 @@ void ballMovement(struct Ball *ball, float deltaTime, int windowWidth,
 };
 int distance_formula(struct Ball *ball, struct Paddle *paddle) {
 
-  int topLeftX = paddle->x;
-  int topLeftY = paddle->y;
+  double closestX = ball->x;
+  double closestY = ball->y;
 
-  int topRightX = paddle->x + paddle->width;
-  int topRightY = paddle->y;
+  if (ball->x < paddle->x) {
 
-  int bottomLeftX = paddle->x;
-  int bottomLeftY = paddle->y + paddle->height;
+    closestX = paddle->x;
 
-  int bottomRightX = paddle->x + paddle->width;
-  int bottomRightY = paddle->y + paddle->height;
-}
+  } else if (ball->x > paddle->x + paddle->width) {
+    closestX = paddle->x + paddle->width;
+  }
+
+  if (ball->y < paddle->y) {
+
+    closestY = paddle->y;
+
+  } else if (ball->y > paddle->y + paddle->height) {
+
+    closestY = paddle->y + paddle->height;
+  }
+
+  double distance =
+      pow(pow(ball->x - closestX, 2) + pow(ball->y - closestY, 2), 2);
+  double ballSquareRadius = pow(ball->radius, 2);
+
+  if (distance <= ballSquareRadius) {
+    return 1;
+  } else {
+    return 0;
+  }
+};
 
 void paddleBallCollision(struct Ball *ball, struct Paddle *paddle,
                          float deltaTime, int windowWidth, int windowHeight) {
 
   if (distance_formula(ball, paddle) == 1) {
-    ball->velocityX *= -1;
+    ball->velocityX *= -1.4;
   }
 };
 
-void enemyPaddleMovement(struct Paddle *paddle, float windowWidth) {
+void paddleLimits(struct Paddle *paddle, float windowWidth,
+                  float windowHeight) {
   if (paddle->x + paddle->width > windowWidth) {
     paddle->x = windowWidth - paddle->width;
   }
-  if (paddle->x < 0) {
+  if (paddle->x <= 0) {
     paddle->x = 0;
+  }
+  if (paddle->y + paddle->height > windowHeight) {
+    paddle->y = windowHeight - paddle->height;
+  }
+  if (paddle->y <= 0) {
+    paddle->y = 0;
   }
 }
 void playerPaddleMovement(struct Paddle *playerPaddle, float windowWidth,
@@ -69,13 +96,23 @@ void playerPaddleMovement(struct Paddle *playerPaddle, float windowWidth,
     playerPaddle->y += playerPaddle->velocity * deltaTime;
   }
 }
+void enemyPaddleMovement(struct Paddle *playerPaddle, float windowWidth,
+                         float deltaTime) {
+  if (IsKeyDown(KEY_W)) {
+    playerPaddle->y -= playerPaddle->velocity * deltaTime;
+  }
+  if (IsKeyDown(KEY_S)) {
+    playerPaddle->y += playerPaddle->velocity * deltaTime;
+  }
+}
 
 int main() {
+  srand(time(NULL));
 
   int windowWidth = 1366;
   int windowHeight = 768;
 
-  int paddlesWidth = 30;
+  int paddlesWidth = 20;
   int paddlesHeight = 80;
 
   InitWindow(windowWidth, windowHeight, "Pong Game");
@@ -90,7 +127,7 @@ int main() {
   paddleTwo.velocity = 100;
 
   // Ball
-  struct Ball ball = {windowWidth / 2.0, windowHeight / 2.0, 3};
+  struct Ball ball = {windowWidth / 2.0, windowHeight / 2.0, 10};
   ball.velocityX = -100;
   ball.velocityY = -100;
 
@@ -103,6 +140,12 @@ int main() {
 
     // PLAYER PADDLE MOVEMENT
     playerPaddleMovement(&paddle, windowWidth, deltaTime);
+
+    // enemyPaddleMovement
+    enemyPaddleMovement(&paddleTwo, windowWidth, deltaTime);
+    // Paddle limits
+    paddleLimits(&paddle, windowWidth, windowHeight);
+    paddleLimits(&paddleTwo, windowWidth, windowHeight);
 
     // Collision
     paddleBallCollision(&ball, &paddle, deltaTime, windowWidth, windowHeight);
@@ -119,6 +162,7 @@ int main() {
     // Draw Enemy;
     DrawRectangle(paddleTwo.x, paddleTwo.y, paddleTwo.width, paddleTwo.height,
                   BLUE);
+
     // Draw The ball
     DrawCircle(ball.x, ball.y, ball.radius, WHITE);
 
