@@ -4,19 +4,19 @@
 #include <time.h>
 
 struct Paddle {
-  float x;
-  float y;
+  double x;
+  double y;
   int width;
   int height;
-  float velocity;
+  double velocity;
 };
 
 struct Ball {
   float x;
   float y;
   int radius;
-  float velocityX;
-  float velocityY;
+  double velocityX;
+  double velocityY;
 };
 
 void ballMovement(struct Ball *ball, float deltaTime, int windowWidth,
@@ -30,6 +30,13 @@ void ballMovement(struct Ball *ball, float deltaTime, int windowWidth,
 
   ball->x += velocityX;
   ball->y += velocityY;
+
+  if (ball->x + ball->radius > windowWidth || ball->x - ball->radius < 0) {
+    ball->x = windowWidth / 2.0;
+    ball->y = windowHeight / 2.0;
+    ball->velocityX = 200;
+    ball->velocityY = 200;
+  }
 };
 int distance_formula(struct Ball *ball, struct Paddle *paddle) {
 
@@ -68,7 +75,7 @@ void paddleBallCollision(struct Ball *ball, struct Paddle *paddle,
                          float deltaTime, int windowWidth, int windowHeight) {
 
   if (distance_formula(ball, paddle) == 1) {
-    ball->velocityX *= -1.4;
+    ball->velocityX *= -1.2;
   }
 };
 
@@ -123,8 +130,8 @@ int main() {
   // Paddle two
   struct Paddle paddleTwo = {windowWidth - paddlesWidth, 0, paddlesWidth,
                              paddlesHeight};
-  paddle.velocity = 100;
-  paddleTwo.velocity = 100;
+  paddle.velocity = 300;
+  paddleTwo.velocity = 300;
 
   // Ball
   struct Ball ball = {windowWidth / 2.0, windowHeight / 2.0, 10};
