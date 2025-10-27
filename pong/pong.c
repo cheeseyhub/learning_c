@@ -18,6 +18,7 @@ struct Ball {
   double velocityX;
   double velocityY;
 };
+double stand_random() { return (rand() % 100) + 1; }
 
 void ballMovement(struct Ball *ball, float deltaTime, int windowWidth,
                   int windowHeight) {
