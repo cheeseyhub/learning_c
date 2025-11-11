@@ -2,6 +2,7 @@
 #include <raylib.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 /**
  * Make Particle Structure [posX , posY, velocity,maxVelocity , radius ]
@@ -27,7 +28,6 @@ typedef struct {
   double posY;
   double velocityX;
   double velocityY;
-  double maxVelocity;
   float radius;
 } Particle;
 
@@ -63,18 +63,17 @@ void calculate_attraction(Particle *particle, Particle *otherParticle) {
     magnitude = 100;
   }
 
+  // Calculating Unit Vector
   double unitVx = distanceX / magnitude;
   double unitVy = distanceY / magnitude;
 
-  // Normalizing the velocity;
-
   particle->velocityX += unitVx / particle->radius;
-
   particle->velocityY += unitVy / particle->radius;
 }
 
 int main() {
 
+  srand(time(NULL));
   int windowWidth = 1366;
   int windowHeight = 768;
   int numberOfParticles = 100;
@@ -94,10 +93,7 @@ int main() {
         chance() > 5 ? (windowHeight / 2.0) + random_number()
                      : (windowHeight / 2.0) - random_number(),
 
-        20,
-        20,
-        30,
-        random_radius(8, 50)};
+        0, 0, random_radius(1, 5)};
   };
 
   while (WindowShouldClose() == false) {
