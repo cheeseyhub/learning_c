@@ -16,7 +16,7 @@
  *
  *
  * Need to use Arrays to store particles
- *
+ * random_radius
  *
  *
  * **/
@@ -39,10 +39,8 @@ double random_number() {
   int min = 90;
   return floor(rand() % (max - min + 1) + min);
 };
-// Random angles
-double random_Angle() {
-  int max = 360;
-  int min = 0;
+double random_radius(int min, int max) {
+
   return floor(rand() % (max - min + 1) + min);
 }
 
@@ -50,25 +48,36 @@ double random_Angle() {
 int chance() { return floor(rand() % 10); }
 
 void MoveParticle(Particle *particle, double deltaTime) {
-  particle->posX = particle->posX + (particle->velocityX * deltaTime);
-  particle->posY = particle->posY + (particle->velocityY * deltaTime);
+
+  particle->posX += (particle->velocityX * deltaTime);
+  particle->posY += (particle->velocityY * deltaTime);
 }
-double calculate_attraction(Particle *particle, Particle *otherParticle) {
+void calculate_attraction(Particle *particle, Particle *otherParticle) {
 
-  // Todo calculate_attraction
+  double distanceX = otherParticle->posX - particle->posX;
+  double distanceY = otherParticle->posY - particle->posY;
+  double magnitude = sqrt(pow(distanceX, 2) + pow(distanceY, 2));
 
-  double distanceX = particle->posX - otherParticle->posX;
-  double distanceY = particle->posY - otherParticle->posY;
-  double vector = sqrt(pow(distanceX, 2) + pow(distanceY, 2));
+  // Prevent division by zero;
+  if (magnitude < 100) {
+    magnitude = 100;
+  }
 
-  return 1;
+  double unitVx = distanceX / magnitude;
+  double unitVy = distanceY / magnitude;
+
+  // Normalizing the velocity;
+
+  particle->velocityX += unitVx / particle->radius;
+
+  particle->velocityY += unitVy / particle->radius;
 }
 
 int main() {
 
   int windowWidth = 1366;
   int windowHeight = 768;
-  int numberOfParticles = 20;
+  int numberOfParticles = 100;
 
   InitWindow(windowWidth, windowHeight, "Title");
 
@@ -85,10 +94,10 @@ int main() {
         chance() > 5 ? (windowHeight / 2.0) + random_number()
                      : (windowHeight / 2.0) - random_number(),
 
-        200,
-        200,
-        3000,
-        5};
+        20,
+        20,
+        30,
+        random_radius(8, 50)};
   };
 
   while (WindowShouldClose() == false) {
@@ -102,6 +111,14 @@ int main() {
       // Draw
       DrawCircle(particles[i].posX, particles[i].posY, particles[i].radius,
                  WHITE);
+
+      // calculate_attraction
+      for (int j = 0; j < numberOfParticles; j++) {
+        // prvent particle from attracting itself
+        if (j != i) {
+          calculate_attraction(&particles[i], &particles[j]);
+        }
+      }
       // Move
       MoveParticle(&particles[i], deltaTime);
     }
