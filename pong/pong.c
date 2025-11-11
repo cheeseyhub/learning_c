@@ -6,10 +6,10 @@
 struct Paddle {
   double x;
   double y;
-  unsigned int  width;
-  unsigned int  height;
+  unsigned int width;
+  unsigned int height;
   double velocity;
-  unsigned int  score;
+  unsigned int score;
 };
 
 struct Ball {
@@ -23,7 +23,8 @@ struct Ball {
 double std_random(int max, int min) { return rand() % (max - min + 1) + min; }
 
 void ballMovement(struct Ball *ball, float deltaTime, int windowWidth,
-                  int windowHeight, unsigned int *playerOneScore, unsigned int *playerTwoScore) {
+                  int windowHeight, unsigned int *playerOneScore,
+                  unsigned int *playerTwoScore) {
 
   if (ball->y + ball->radius > windowHeight || ball->y - ball->radius < 0) {
     ball->velocityY *= -1;
@@ -60,10 +61,8 @@ int distance_formula(struct Ball *ball, struct Paddle *paddle) {
   double closestX = ball->x;
   double closestY = ball->y;
 
-
   int collisionXValue = 1;
   int collisionYValue = 1;
-
 
   if (ball->x < paddle->x) {
 
@@ -72,7 +71,6 @@ int distance_formula(struct Ball *ball, struct Paddle *paddle) {
   } else if (ball->x > paddle->x + paddle->width) {
     closestX = paddle->x + paddle->width;
     collisionXValue = 1;
-
   }
 
   if (ball->y < paddle->y) {
@@ -91,7 +89,7 @@ int distance_formula(struct Ball *ball, struct Paddle *paddle) {
   if (distance <= ballSquareRadius) {
     return collisionXValue + collisionYValue;
   } else {
-      //Do nothing value
+    // Do nothing value
     return 5;
   }
 };
@@ -99,32 +97,28 @@ int distance_formula(struct Ball *ball, struct Paddle *paddle) {
 void paddleBallCollision(struct Ball *ball, struct Paddle *paddle,
                          float deltaTime, int windowWidth, int windowHeight) {
 
-    int result = distance_formula(ball, paddle);
+  int result = distance_formula(ball, paddle);
   if (result == 1) {
-      ball->velocityY *= 1;
-      ball->velocityX *= -1;
-  }
-  else if (result == 2) {
-      ball->velocityY *= 1.2;
-      ball->velocityX *= -1.2;
-  }
-  else if (result == 0) {
-      ball->velocityY *= -1.4;
-      ball->velocityX *= -1.4;
+    ball->velocityY *= 1;
+    ball->velocityX *= -1;
+  } else if (result == 2) {
+    ball->velocityY *= 1.2;
+    ball->velocityX *= -1.2;
+  } else if (result == 0) {
+    ball->velocityY *= -1.4;
+    ball->velocityX *= -1.4;
   }
 
-  //Limits of speed
-  if(ball->velocityX < -ball->velocityLimit){
+  // Limits of speed
+  if (ball->velocityX < -ball->velocityLimit) {
     ball->velocityX = -ball->velocityLimit;
-  }
-  else if(ball->velocityX > ball->velocityLimit){
+  } else if (ball->velocityX > ball->velocityLimit) {
     ball->velocityX = ball->velocityLimit;
   }
 
-  if(ball->velocityY < -ball->velocityLimit){
+  if (ball->velocityY < -ball->velocityLimit) {
     ball->velocityY = -ball->velocityLimit;
-  }
-  else if(ball->velocityY > ball->velocityLimit){
+  } else if (ball->velocityY > ball->velocityLimit) {
     ball->velocityY = ball->velocityLimit;
   }
 };
@@ -191,7 +185,7 @@ int main() {
   struct Ball ball = {windowWidth / 2.0, windowHeight / 2.0, 10};
   ball.velocityX = -200;
   ball.velocityY = -200;
-  //Limits of ball speed;
+  // Limits of ball speed;
   ball.velocityLimit = 500;
 
   while (WindowShouldClose() == false) {
