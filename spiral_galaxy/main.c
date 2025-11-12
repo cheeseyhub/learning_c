@@ -43,6 +43,11 @@ double random_radius(int min, int max) {
 
   return floor(rand() % (max - min + 1) + min);
 }
+double random_angle() {
+  int max = 360;
+  int min = 0;
+  return (PI / 180) * (rand() % (max - min + 1) + min);
+}
 
 // Chance Generator
 int chance() { return floor(rand() % 10); }
@@ -67,7 +72,7 @@ void calculate_attraction(Particle *particle, Particle *otherParticle) {
   double unitVxAcceleration = distanceX / magnitude;
   double unitVyAcceleration = distanceY / magnitude;
 
-  const double G = 0.008;
+  const double G = 0.066743;
   particle->velocityX += (unitVxAcceleration * G) / particle->radius;
   particle->velocityY += (unitVyAcceleration * G) / particle->radius;
 }
@@ -79,22 +84,35 @@ int main() {
   int windowHeight = 768;
   int numberOfParticles = 500;
 
+  double centerDensityRadius = 100;
+
   InitWindow(windowWidth, windowHeight, "Title");
 
   Particle particles[numberOfParticles];
 
   for (int i = 0; i < numberOfParticles; i++) {
 
-    // Make Particles
+    // Make Particles (spawn only on corners)
+    // particles[i] = (Particle){
+    //
+    //     chance() > 5 ? (windowWidth / 2.0) + random_number()
+    //                  : (windowWidth / 2.0) - random_number(),
+    //
+    //     chance() > 5 ? (windowHeight / 2.0) + random_number()
+    //                  : (windowHeight / 2.0) - random_number(),
+    //
+    //     0, 0, 3};
+    //
+
+    // Spawn all around
+
     particles[i] = (Particle){
 
-        chance() > 5 ? (windowWidth / 2.0) + random_number()
-                     : (windowWidth / 2.0) - random_number(),
+        (windowWidth / 2.0) + (centerDensityRadius * cos(random_angle())),
 
-        chance() > 5 ? (windowHeight / 2.0) + random_number()
-                     : (windowHeight / 2.0) - random_number(),
+        (windowHeight / 2.0) + (centerDensityRadius * sin(random_angle())),
 
-        0, 0, 1};
+        0, 0, 3};
   };
 
   while (WindowShouldClose() == false) {
