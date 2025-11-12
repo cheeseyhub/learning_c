@@ -64,11 +64,12 @@ void calculate_attraction(Particle *particle, Particle *otherParticle) {
   }
 
   // Calculating Unit Vector
-  double unitVx = distanceX / magnitude;
-  double unitVy = distanceY / magnitude;
+  double unitVxAcceleration = distanceX / magnitude;
+  double unitVyAcceleration = distanceY / magnitude;
 
-  particle->velocityX += unitVx / particle->radius;
-  particle->velocityY += unitVy / particle->radius;
+  const double G = 0.008;
+  particle->velocityX += (unitVxAcceleration * G) / particle->radius;
+  particle->velocityY += (unitVyAcceleration * G) / particle->radius;
 }
 
 int main() {
@@ -76,7 +77,7 @@ int main() {
   srand(time(NULL));
   int windowWidth = 1366;
   int windowHeight = 768;
-  int numberOfParticles = 100;
+  int numberOfParticles = 500;
 
   InitWindow(windowWidth, windowHeight, "Title");
 
@@ -93,7 +94,7 @@ int main() {
         chance() > 5 ? (windowHeight / 2.0) + random_number()
                      : (windowHeight / 2.0) - random_number(),
 
-        0, 0, random_radius(1, 5)};
+        0, 0, 1};
   };
 
   while (WindowShouldClose() == false) {
