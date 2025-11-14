@@ -1,26 +1,7 @@
 #include <math.h>
 #include <raylib.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
-/**
- * Make Particle Structure [posX , posY, velocity,maxVelocity , radius ]
- *
- * Make Two particles for testing
- *
- * Function that generates a random number
- * Function that attracts particles.
- *  -- subtract particles x and y from each other and  set the velocity
- *  -- Normalize Vector and set the velocity there should be no division by
- * zero;
- *
- *
- * Need to use Arrays to store particles
- * random_radius
- *
- *
- * **/
 
 // Particle
 typedef struct {
@@ -84,7 +65,7 @@ int main() {
   int windowHeight = 768;
   int numberOfParticles = 500;
 
-  double centerDensityRadius = 100;
+  double centerDensityRadius = 300;
 
   InitWindow(windowWidth, windowHeight, "Title");
 
@@ -102,9 +83,8 @@ int main() {
     //                  : (windowHeight / 2.0) - random_number(),
     //
     //     0, 0, 3};
-    //
 
-    // Spawn all around
+    // Spawn all around in square
 
     particles[i] = (Particle){
 
@@ -112,7 +92,15 @@ int main() {
 
         (windowHeight / 2.0) + (centerDensityRadius * sin(random_angle())),
 
-        0, 0, 3};
+        0, 0, 2};
+
+    // particles[i] = (Particle){
+    //
+    //     (windowWidth / 2.0) + (centerDensityRadius * cos(i)),
+    //
+    //     (windowHeight / 2.0) + (centerDensityRadius * sin(i)),
+    //
+    //     0, 0, 2};
   };
 
   while (WindowShouldClose() == false) {
