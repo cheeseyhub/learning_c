@@ -67,7 +67,7 @@ int main() {
 
   double centerDensityRadius = 300;
 
-  InitWindow(windowWidth, windowHeight, "Title");
+  InitWindow(windowWidth, windowHeight, "This is a title");
 
   Particle particles[numberOfParticles];
 
