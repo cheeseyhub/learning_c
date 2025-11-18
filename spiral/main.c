@@ -1,5 +1,5 @@
+#include "include/raylib.h"
 #include <math.h>
-#include <raylib.h>
 #include <stdlib.h>
 #include <time.h>
 
