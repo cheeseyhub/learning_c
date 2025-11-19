@@ -12,9 +12,6 @@ typedef struct {
   float radius;
 } Particle;
 
-//  Functions
-//  Random Number generator
-
 double random_number() {
   int max = 100;
   int min = 90;

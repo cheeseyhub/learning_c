@@ -40,8 +40,8 @@ void ballMovement(struct Ball *ball, float deltaTime, int windowWidth,
     ball->x = windowWidth / 2.0;
     ball->y = windowHeight / 2.0;
 
-    ball->velocityX = std_random(200, 100);
-    ball->velocityY = std_random(200, 100);
+    ball->velocityX = std_random(500, 100);
+    ball->velocityY = std_random(500, 100);
 
     *playerOneScore = *playerOneScore + 1;
 
@@ -50,8 +50,8 @@ void ballMovement(struct Ball *ball, float deltaTime, int windowWidth,
     ball->x = windowWidth / 2.0;
     ball->y = windowHeight / 2.0;
 
-    ball->velocityX = std_random(200, 100);
-    ball->velocityY = std_random(200, 100);
+    ball->velocityX = std_random(500, 100);
+    ball->velocityY = std_random(500, 100);
 
     *playerTwoScore = *playerTwoScore + 1;
   }
@@ -197,10 +197,10 @@ int main() {
                  &playerTwo.score);
 
     // PLAYER PADDLE MOVEMENT
-    playerPaddleMovement(&playerOne, windowWidth, deltaTime);
+    playerPaddleMovement(&playerTwo, windowWidth, deltaTime);
 
     // enemyPaddleMovement
-    enemyPaddleMovement(&playerTwo, windowWidth, deltaTime);
+    enemyPaddleMovement(&playerOne, windowWidth, deltaTime);
 
     // Paddle limits
     paddleLimits(&playerOne, windowWidth, windowHeight);
@@ -231,6 +231,15 @@ int main() {
     DrawText(TextFormat("Score: %d", playerOne.score), 0, 0, 30, WHITE);
     DrawText(TextFormat("Score: %d", playerTwo.score), windowWidth - 135, 0, 30,
              WHITE);
+
+    if (playerOne.score > 10) {
+
+      DrawText("Player One wins", windowWidth / 2, windowHeight / 2, 10, WHITE);
+    }
+    if (playerTwo.score > 10) {
+
+      DrawText("Player Two wins", windowWidth / 2, windowHeight / 2, 10, WHITE);
+    }
     EndDrawing();
   }
   return 0;
