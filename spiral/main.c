@@ -60,7 +60,7 @@ int main() {
   srand(time(NULL));
   int windowWidth = 1366;
   int windowHeight = 768;
-  int numberOfParticles = 500;
+  int numberOfParticles = 20;
 
   double centerDensityRadius = 300;
 
@@ -114,7 +114,7 @@ int main() {
 
       // calculate_attraction
       for (int j = 0; j < numberOfParticles; j++) {
-        // prvent particle from attracting itself
+        // prevent particle from attracting itself
         if (j != i) {
           calculate_attraction(&particles[i], &particles[j]);
         }
