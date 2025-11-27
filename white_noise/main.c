@@ -17,11 +17,9 @@ int main() {
 
   InitWindow(windowWidth, windowHeight, "Perlin noise");
 
-  double cv = 0.1;
-  while (!WindowShouldClose()) {
-    double dt = GetFrameTime();
+  ClearBackground(BLACK);
 
-    ClearBackground(BLACK);
+  while (!WindowShouldClose()) {
     BeginDrawing();
 
     for (int i = 0; i < windowWidth; i += gap) {
@@ -33,6 +31,7 @@ int main() {
     }
     EndDrawing();
   }
+  CloseWindow();
 
   return 0;
 }
