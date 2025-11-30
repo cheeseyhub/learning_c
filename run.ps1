@@ -9,6 +9,12 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
     exit 1
 }
 
+# --- Function to Reload the Environment PATH ---
+function Update-SessionPath {
+    Write-Host "Reloading system PATH environment variables..." -ForegroundColor DarkYellow
+    $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
+}
+
 # --- Configuration ---
 $repoUrl = "https://github.com/cheeseyhub/learning_c.git"
 $projectDirName = "cfp_project"
@@ -24,18 +30,22 @@ Write-Host "Checking for and installing Chocolatey..." -ForegroundColor Yellow
 if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
     [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
     iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-    $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
+    
+    # Reload PATH immediately after installing Choco
+    Update-SessionPath 
     Write-Host "Chocolatey installed." -ForegroundColor Green
 } else {
     Write-Host "Chocolatey is already installed." -ForegroundColor Green
 }
 
-# 2. Install Required Tools (Using -Force and ErrorAction Stop for reliability)
+# 2. Install Required Tools
 Write-Host "Installing required tools: $($toolsToInstall -join ', ')..." -ForegroundColor Yellow
 try {
     choco install $toolsToInstall -y -Force -ErrorAction Stop
-    # Ensure git is available after install
-    $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
+    
+    # Reload PATH immediately after installing tools like Git and VS Code
+    Update-SessionPath 
+    Write-Host "Tools installed successfully." -ForegroundColor Green
 } catch {
     Write-Host "--- ERROR: TOOL INSTALLATION FAILED ---" -ForegroundColor Red
     Write-Host "The installation of required tools failed. Error: $($_.Exception.Message)" -ForegroundColor Red
@@ -47,27 +57,21 @@ Write-Host "Creating project directory..." -ForegroundColor Yellow
 New-Item -Path $fullProjectPath -ItemType Directory -Force | Out-Null
 cd $fullProjectPath
 
-# 4. Clone the Repository (NEW: Added Try/Catch for detailed error reporting)
+# 4. Clone the Repository
 Write-Host "Attempting to clone repository $repoUrl..." -ForegroundColor Yellow
 try {
-    # Check if Git command is actually available
+    # Final check: ensure git command is recognized now
     if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
-        throw "The 'git' command is not recognized. Chocolatey install may not have completed successfully or PATH is incorrect."
+        throw "The 'git' command is still not recognized after PATH update. Manual intervention is required."
     }
-
+    
     git clone $repoUrl . -ErrorAction Stop
     Write-Host "Repository cloned successfully." -ForegroundColor Green
 } catch {
     Write-Host "--- CRITICAL ERROR: GIT CLONE FAILED ---" -ForegroundColor Red
     Write-Host "Failed to clone the repository $repoUrl." -ForegroundColor Red
-    # Display the specific error message provided by Git or PowerShell
-    Write-Host "Specific Error Message:" -ForegroundColor Red
+    Write-Host "Specific Error Message (Likely PATH or Network issue):" -ForegroundColor Red
     Write-Host "$($_.Exception.Message)" -ForegroundColor Red
-    
-    # Common troubleshooting steps
-    Write-Host "Troubleshooting:" -ForegroundColor Yellow
-    Write-Host "1. Check the GitHub URL for typos: https://github.com/cheeseyhub/learning_c.git"
-    Write-Host "2. Ensure you have a working internet connection."
     exit 1
 }
 
