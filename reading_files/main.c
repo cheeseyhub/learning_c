@@ -1,34 +1,22 @@
 #include <stdio.h>
 
 int main() {
-  int errorValue = 0;
+
   FILE *inputFile;
-  FILE *outputFile;
   inputFile = fopen("./input.txt", "r");
-  outputFile = fopen("./output.txt", "w+");
 
-  if (inputFile == NULL) {
+  if (inputFile == NULL ) {
     printf("Error opening the file");
-    errorValue = 1;
-    goto end;
+    return 1;
   }
 
-  if (outputFile == NULL) {
-    printf("Error opening the outputFile");
-    errorValue = 1;
-    goto end;
+
+  int ch;
+  while ((ch = fgetc(inputFile)) != EOF) {
+    printf("%c", ch);
   }
 
-  char word[50];
-  int count = 0;
-  while ((fgets(word, sizeof(word), inputFile))) {
-    printf("%s", word);
-    fputs(word, outputFile);
-  }
-
-end:
   fclose(inputFile);
-  fclose(outputFile);
 
-  return errorValue;
+  return 0;
 }
