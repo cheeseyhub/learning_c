@@ -1,5 +1,5 @@
 CC = gcc
-WIN_CC = mingw64/bin/gcc.exe
+WIN_CC = x86_64-w64-mingw32-gcc
 CFLAGS = -I./include -I./raygui-4.0/src -Wall
 TARGET = main
 WIN_TARGET = main.exe
