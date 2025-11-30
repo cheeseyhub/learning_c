@@ -1,5 +1,5 @@
 CC = gcc
-WIN_CC = x86_64-w64-mingw32-gcc
+WIN_CC = mingw64/bin/gcc.exe
 CFLAGS = -I./include -I./raygui-4.0/src -Wall
 TARGET = main
 WIN_TARGET = main.exe
@@ -13,6 +13,8 @@ LIBS_WIN = -L./lib/windows -lraylib -lopengl32 -lgdi32 -lwinmm -static
 
 # Default target for Linux
 all: $(TARGET)
+
+build-all: all windows
 
 $(TARGET): $(SOURCES)
 	$(CC) $(SOURCES) $(CFLAGS) $(LIBS_LINUX) -o $(TARGET)
