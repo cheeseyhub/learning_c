@@ -71,9 +71,8 @@ scoop install vscode
 
 <img width="550" height="414" alt="image" src="https://github.com/user-attachments/assets/b6df752f-c13e-4307-b56d-08fbe05a5bbd" />\
 
-
-
 ---
+
 
 
 **Now click on the gear icon on the bottom left and set the autosave option.**
@@ -86,6 +85,8 @@ scoop install vscode
 
 
 ---
+
+
 **Also install the C/C++ extension pack** 
 <img width="777" height="493" alt="image" src="https://github.com/user-attachments/assets/d0842f59-3856-4085-be7f-fdc046eca14a" />
 <img width="1358" height="358" alt="image" src="https://github.com/user-attachments/assets/34ee5663-6f91-45ee-8f21-8495da979ed1" />
@@ -94,13 +95,19 @@ scoop install vscode
 
 
 ---
+
+
+
+
 **Now click on the main.c file**
 You can open the terminal with the  "Control + `" shortcut.
 
 Type make windows to compile the file.
+
 <img width="782" height="766" alt="image" src="https://github.com/user-attachments/assets/2f3fcc5f-656f-4d71-b9b0-3af100cae68c" />
 
 Then type ".\main.exe" to run the file.
+
 <img width="903" height="656" alt="image" src="https://github.com/user-attachments/assets/3f5980b8-0fed-4b26-bdbb-f98d0e27ff01" />
 
 
