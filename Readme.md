@@ -5,7 +5,7 @@
  
  
 ### Setting  for computer center in university (pieas)(windows).
-The proxy may vary depending on the university so edit as desired.
+The proxy may vary depending on the university, so edit as desired. Paste this command below in PowerShell
 ```
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
@@ -19,8 +19,10 @@ scoop bucket add extras
 scoop install vscode
 ```
 
-### For setting up for personal computer
-Please remember if you have already installed git and make and mingw you can just  skip the following part.
+### For setting up a personal computer
+Please remember, if you have already installed git and make and mingw, you can just  skip the following part.
+
+Pase The command below in powershell.
 
 ```
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
