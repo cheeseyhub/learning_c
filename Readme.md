@@ -35,4 +35,24 @@ scoop install vscode
 ```
 
 
+**Now click on the Green code button in the current repository:**
+
+<img width="453" height="377" alt="image" src="https://github.com/user-attachments/assets/051b9b16-ac6d-4a35-8dea-96ac5af47a91" />
+
+**Download the zip file and extract it.**
+
+<img width="351" height="146" alt="image" src="https://github.com/user-attachments/assets/2eef1f0d-7a50-47c1-9603-1ee90f3b85f3" />
+
+**Open the folder and then cut and paste the template folder into your desired location.**
+
+<img width="515" height="218" alt="image" src="https://github.com/user-attachments/assets/65dcdfc0-70d5-4197-9a2f-12d41adc4cf7" />
+
+**You can now delete the other folders only the template folder is required,  Other folders contain examples**
+
+<img width="175" height="149" alt="image" src="https://github.com/user-attachments/assets/487142b0-7165-41d2-bc87-917fc3b92990" />
+
+**Now open vscode click on the file tab on the top left and **
+
+
+
 
