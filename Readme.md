@@ -86,6 +86,14 @@ scoop install vscode
 
 
 ---
+**Also install the C/C++ extension pack** 
+<img width="777" height="493" alt="image" src="https://github.com/user-attachments/assets/d0842f59-3856-4085-be7f-fdc046eca14a" />
+<img width="1358" height="358" alt="image" src="https://github.com/user-attachments/assets/34ee5663-6f91-45ee-8f21-8495da979ed1" />
+
+
+
+
+---
 **Now click on the main.c file**
 You can open the terminal with the  "Control + `" shortcut.
 
