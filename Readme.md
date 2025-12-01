@@ -20,9 +20,9 @@ scoop install vscode
 ```
 
 ### For setting up a personal computer
-Please remember, if you have already installed git and make and mingw, you can just  skip the following part.
+Please remember, if you have already installed git and make, and mingw, you can just  skip the following part.
 
-Pase The command below in powershell.
+Paste the command below in PowerShell.
 
 ```
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
@@ -59,13 +59,13 @@ scoop install vscode
 
 ---
 
-**You can now delete the other folders only the template folder is required,  Other folders contain examples**
+**You can now delete the other folders; only the template folder is required.  Other folders contain examples**
 
 <img width="175" height="149" alt="image" src="https://github.com/user-attachments/assets/487142b0-7165-41d2-bc87-917fc3b92990" />
 
 ---
 
-**Now open vscode click on the file tab on the top left and navigate to the place where you put the template folder and open it.**
+**Now open vscode click on the file tab on the top left, and navigate to the place where you put the template folder and open it.**
 
 <img width="802" height="459" alt="image" src="https://github.com/user-attachments/assets/672a55ab-6145-47e4-b303-69c88b28d46a" /> \
 
@@ -74,6 +74,8 @@ scoop install vscode
 
 
 ---
+
+
 **Now click on the gear icon on the bottom left and set the autosave option.**
 
 <img width="375" height="517" alt="image" src="https://github.com/user-attachments/assets/bd771087-c213-4b83-af53-02053f15c269" />
@@ -85,7 +87,7 @@ scoop install vscode
 
 ---
 **Now click on the main.c file**
-You can open the terminal with the  ""Control + `"" shortcut.
+You can open the terminal with the  "Control + `" shortcut.
 
 Type make windows to compile the file.
 <img width="782" height="766" alt="image" src="https://github.com/user-attachments/assets/2f3fcc5f-656f-4d71-b9b0-3af100cae68c" />
