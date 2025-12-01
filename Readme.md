@@ -65,7 +65,7 @@ scoop install vscode
 
 ---
 
-**Now open vscode click on the file tab on the top left, and navigate to the place where you put the template folder and open it.**
+**VsCode will automatically be installed by the above commands so now open vscode click on the file tab on the top left, and navigate to the place where you put the template folder and open it.**
 
 <img width="802" height="459" alt="image" src="https://github.com/user-attachments/assets/672a55ab-6145-47e4-b303-69c88b28d46a" /> \
 
