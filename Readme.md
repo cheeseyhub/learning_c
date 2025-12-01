@@ -20,7 +20,7 @@ scoop install vscode
  
 ```
 ### For setting up for personal computer
-Please remember if you have already installed git and make and mingw you can just run the skip the following part.
+Please remember if you have already installed git and make and mingw you can just  skip the following part.
 
 ```
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
