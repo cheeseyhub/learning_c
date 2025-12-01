@@ -19,7 +19,7 @@ scoop bucket add extras
 scoop install vscode
 ```
 
-### For setting up on  a personal computer
+## For setting up on  a personal computer
 Please remember, if you have already installed git and make, and mingw, you can just  skip the following part.
 
 Paste the command below in PowerShell.
