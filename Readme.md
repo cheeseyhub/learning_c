@@ -14,6 +14,7 @@ scoop install git mingw make
 git config --global http.proxy http://172.30.10.11:3128
 git config --global https.proxy http://172.30.10.11:3128
 
+scoop bucket add extras
 scoop install vscode
  
 ```
