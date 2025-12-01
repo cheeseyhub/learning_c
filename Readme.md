@@ -1,6 +1,6 @@
 # C Projects
   Here are my labs_practice , and c projects;
- Must have make , gcc or mingw installed to compile .
+ Must have make, gcc, or mingw installed to compile.
 ## Instruction for installing the library (5.5v)
  
  
@@ -19,7 +19,7 @@ scoop bucket add extras
 scoop install vscode
 ```
 
-### For setting up a personal computer
+### For setting up on  a personal computer
 Please remember, if you have already installed git and make, and mingw, you can just  skip the following part.
 
 Paste the command below in PowerShell.
