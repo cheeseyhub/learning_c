@@ -1,4 +1,6 @@
-# --- Automated C Project Setup Script (Run as Administrator) ---
+# --- Automated Tool Installation Script (Run as Administrator) ---
+# This script ensures Chocolatey is installed, then installs make, mingw, vscode, and git.
+# It stops immediately after successful installation and reloading the environment path.
 # Paste this entire block into an elevated PowerShell window.
 
 # --- 0. CRITICAL CHECK: Ensure Elevation ---
@@ -12,14 +14,11 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 # --- Function to Reload the Environment PATH ---
 function Update-SessionPath {
     Write-Host "Reloading system PATH environment variables..." -ForegroundColor DarkYellow
+    # Pulls the latest PATH variables from the system environment
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
 }
 
 # --- Configuration ---
-$repoUrl = "https://github.com/cheeseyhub/learning_c.git"
-$projectDirName = "cfp_project"
-$desktopPath = "$env:USERPROFILE\Desktop"
-$fullProjectPath = Join-Path -Path $desktopPath -ChildPath $projectDirName
 $toolsToInstall = "make", "mingw", "vscode", "git"
 
 # Set execution policy for the current process to allow script execution
@@ -52,51 +51,8 @@ try {
     exit 1
 }
 
-# 3. Create Project Directory
-Write-Host "Creating project directory..." -ForegroundColor Yellow
-New-Item -Path $fullProjectPath -ItemType Directory -Force | Out-Null
-cd $fullProjectPath
-
-# 4. Clone the Repository
-Write-Host "Attempting to clone repository $repoUrl..." -ForegroundColor Yellow
-try {
-    # Final check: ensure git command is recognized now
-    if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
-        throw "The 'git' command is still not recognized after PATH update. Manual intervention is required."
-    }
-    
-    git clone $repoUrl . -ErrorAction Stop
-    Write-Host "Repository cloned successfully." -ForegroundColor Green
-} catch {
-    Write-Host "--- CRITICAL ERROR: GIT CLONE FAILED ---" -ForegroundColor Red
-    Write-Host "Failed to clone the repository $repoUrl." -ForegroundColor Red
-    Write-Host "Specific Error Message (Likely PATH or Network issue):" -ForegroundColor Red
-    Write-Host "$($_.Exception.Message)" -ForegroundColor Red
-    exit 1
-}
-
-
-# 5. Clean up and Isolate the 'template' Folder
-Write-Host "Isolating 'template' folder..." -ForegroundColor Yellow
-$tempDir = "template_temp_$(Get-Random)"
-$templatePath = Join-Path -Path $fullProjectPath -ChildPath "template"
-$templateTempPath = Join-Path -Path $desktopPath -ChildPath $tempDir
-
-if (Test-Path $templatePath) {
-    Move-Item -Path $templatePath -Destination $templateTempPath -Force
-    cd $desktopPath # Move out of the directory before deletion
-    Remove-Item -Path $fullProjectPath -Recurse -Force
-    New-Item -Path $fullProjectPath -ItemType Directory -Force | Out-Null
-    Move-Item -Path $templateTempPath -Destination $templatePath -Force
-    cd $templatePath
-} else {
-    Write-Error "Template folder not found after cloning. Cannot proceed with cleanup."
-    exit 1
-}
-
-# 6. Open in VS Code
-Write-Host "Setup complete. Opening project in VS Code..." -ForegroundColor Green
-code .
-
-Write-Host "---"
-Write-Host "You are now in the $projectDirName/template directory. Start coding!" -ForegroundColor Green
+# --- Final Message ---
+Write-Host "--------------------------------------------------------" -ForegroundColor Cyan
+Write-Host "Prerequisite setup is complete!" -ForegroundColor Green
+Write-Host "You may need to close and reopen your PowerShell window or VS Code for the new tools (make, git, code) to be recognized globally." -ForegroundColor White
+Write-Host "--------------------------------------------------------" -ForegroundColor Cyan
