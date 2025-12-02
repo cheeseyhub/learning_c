@@ -79,7 +79,8 @@ scoop install vscode
 
 <img width="375" height="517" alt="image" src="https://github.com/user-attachments/assets/bd771087-c213-4b83-af53-02053f15c269" />
 
-<img width="740" height="493" alt="image" src="https://github.com/user-attachments/assets/0a9882f2-82c9-44ca-8f82-dd1b7de3537f" />
+<img width="1269" height="617" alt="image" src="https://github.com/user-attachments/assets/4e9f326c-c4c8-4cd1-bb62-b31d99b00d00" />
+
 
 <img width="569" height="333" alt="image" src="https://github.com/user-attachments/assets/d703d3a8-8421-411c-bca4-1105e792830b" />
 
