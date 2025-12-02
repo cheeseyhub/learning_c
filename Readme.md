@@ -88,7 +88,10 @@ scoop install vscode
 
 
 **Also install the C/C++ extension pack** 
+Click on the box like icon in the left panel.And search C/C++
+
 <img width="777" height="493" alt="image" src="https://github.com/user-attachments/assets/d0842f59-3856-4085-be7f-fdc046eca14a" />
+
 <img width="1358" height="358" alt="image" src="https://github.com/user-attachments/assets/34ee5663-6f91-45ee-8f21-8495da979ed1" />
 
 
@@ -100,15 +103,44 @@ scoop install vscode
 
 
 **Now click on the main.c file**
-You can open the terminal with the  "Control + `" shortcut.
 
-Type make windows to compile the file.
+You can open the terminal by pressing the control key and the ` key together (which is right on top of your tab key). 
+
+Type "make windows" to compile the file.
 
 <img width="782" height="766" alt="image" src="https://github.com/user-attachments/assets/2f3fcc5f-656f-4d71-b9b0-3af100cae68c" />
 
-Then type ".\main.exe" to run the file.
+Then type ".\main.exe" to run the file in windows. and for linux only type ./main .
 
 <img width="903" height="656" alt="image" src="https://github.com/user-attachments/assets/3f5980b8-0fed-4b26-bdbb-f98d0e27ff01" />
+
+
+***You should see a black screen pop up after that***.
+
+
+
+**The Draw Circle function  should be placed between the BeginDrawing and EndDrawing function.**
+
+<img width="700" height="551" alt="image" src="https://github.com/user-attachments/assets/9ba213db-bf26-44b9-b4af-2780726e1878" />
+
+
+**After any change to the file you need to compile and run the file again. so open the terminal and type "make windows" then "./main.exe" or you can also press the up arrow key in the terminal to cycle thhrough previous commands.**
+
+<img width="1042" height="675" alt="image" src="https://github.com/user-attachments/assets/3042fea2-4905-411e-aad9-61a32b77ee85" />
+
+---
+
+<img width="997" height="494" alt="image" src="https://github.com/user-attachments/assets/e23ed530-a533-4dbb-a8be-5b335bb7825e" />
+
+**You should see a Red Ball on the black screen. Thats it enjoy**
+<img width="1120" height="379" alt="image" src="https://github.com/user-attachments/assets/299e8df5-0302-4c2c-a8b3-dcf715e9546b" />
+
+
+
+
+
+
+
 
 
 
