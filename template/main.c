@@ -11,7 +11,7 @@ int main() {
   InitWindow(windowWidth, windowHeight, "Edit as you like it .");
 
   while (!WindowShouldClose()) {
-    ClearBackground(BLACK);
+    ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
 
     BeginDrawing();
 
