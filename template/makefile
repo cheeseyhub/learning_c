@@ -1,6 +1,6 @@
 CC = gcc
 WIN_CC = x86_64-w64-mingw32-gcc
-CFLAGS = -o3 -I./include -I./raygui-4.0/src -Wall
+CFLAGS = -O3 -I./include -I./raygui-4.0/src -Wall
 TARGET = main
 WIN_TARGET = main.exe
 SOURCES = main.c
