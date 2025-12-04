@@ -5,16 +5,16 @@
 
 int main() {
 
-  int windowWidth = 1366;
-  int windowHeight = 768;
-
+  int windowWidth = 700;
+  int windowHeight = 600;
 
   InitWindow(windowWidth, windowHeight, "Edit as you like it .");
 
   while (!WindowShouldClose()) {
     ClearBackground(BLACK);
+
     BeginDrawing();
-    
+
     EndDrawing();
   }
 

@@ -12,6 +12,8 @@ typedef struct {
   unsigned int rows;
   unsigned int cols;
   unsigned int maxval;
+
+  Pixel **pixels;
 } ppmimage;
 
 ppmimage *ppm_readimage(const char *filename);

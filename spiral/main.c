@@ -60,7 +60,7 @@ int main() {
   srand(time(NULL));
   int windowWidth = 1366;
   int windowHeight = 768;
-  int numberOfParticles = 20;
+  int numberOfParticles = 200;
 
   double centerDensityRadius = 300;
 

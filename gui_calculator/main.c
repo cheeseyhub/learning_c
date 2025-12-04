@@ -3,33 +3,43 @@
 #define RAYGUI_IMPLEMENTATION
 #include "raygui-4.0/src/raygui.h"
 
-int main() {
+// Window Width and Height;
+int windowWidth = 400;
+int windowHeight = 500;
 
-  int windowWidth = 1366;
-  int windowHeight = 768;
+void calculatorLayout(Rectangle topPanel, Rectangle buttonDesign) {
+  // Drawing the top panel.
+  GuiTextBox(topPanel, "", 50, true);
+
+  int buttonNumber = 0;
+  for (int row = 0; row <= 3; row++) {
+    // Button number
+    int rowGap = 3;
+    buttonDesign.y =
+        topPanel.height + (200) + (buttonDesign.height * row) + (row * rowGap);
+
+    for (int col = 0; col <= 3; col++) {
+      int gap = 10;
+      buttonDesign.x = ((buttonDesign.width + gap) * (col));
+      GuiButton(buttonDesign, TextFormat("%d", buttonNumber));
+      buttonNumber++;
+    }
+  }
+}
+
+int main() {
 
   InitWindow(windowWidth, windowHeight, "Edit as you like it .");
 
-  bool showMessageBox = false;
+  Rectangle topPanel = {0, 0, 400, 100};
+  Rectangle buttonDesign = {0, 0, 60, 40};
 
   while (!WindowShouldClose()) {
 
     BeginDrawing();
 
     ClearBackground(GetColor(GuiGetStyle(DEFAULT, BACKGROUND_COLOR)));
-
-    if (GuiButton((Rectangle){24, 24, 120, 30}, "#200#Show Message")) {
-      showMessageBox = true;
-    }
-    // Render the message box inside of messagebox
-    if (showMessageBox) {
-      int result =
-          GuiMessageBox((Rectangle){100, 100, 400, 500}, "#191#MessageBox",
-                        "This is a message", "Nice;Cool");
-      if (result >= 0) {
-        showMessageBox = false;
-      }
-    }
+    calculatorLayout(topPanel, buttonDesign);
 
     EndDrawing();
   }
