@@ -1,4 +1,6 @@
+#include "include/config.h"
 #include "include/raylib.h"
+#include "include/raymath.h"
 
 #define RAYGUI_IMPLEMENTATION
 #include "raygui-4.0/src/raygui.h"
