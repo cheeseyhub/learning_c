@@ -1,5 +1,6 @@
 #include "ppm.h"
 #include <math.h>
+#include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -32,7 +33,7 @@ void colorInversion(ppmimage *image) {
   }
 }
 
-void edgeDetection(ppmimage *image, int threshold) {
+void edgeDetection(ppmimage *image, int threshold, int colorRetention) {
   // Horizontal Grid
   int Gx[3][3] = {
       {-1, 0, +1},
@@ -86,9 +87,11 @@ void edgeDetection(ppmimage *image, int threshold) {
           sqrt((horizontalMag * horizontalMag) + (verticalMag * verticalMag));
 
       if (TotalMagnitude > threshold) {
-        image->pixels[imageRow][imageCol].r = 255;
-        image->pixels[imageRow][imageCol].g = 255;
-        image->pixels[imageRow][imageCol].b = 255;
+        if (colorRetention == 0) {
+          image->pixels[imageRow][imageCol].r = 255;
+          image->pixels[imageRow][imageCol].g = 255;
+          image->pixels[imageRow][imageCol].b = 255;
+        }
       } else {
 
         image->pixels[imageRow][imageCol].r = 0;
@@ -103,10 +106,11 @@ int main(int argc, char *argv[]) {
   // If less than two arguments are given then. print the usage.
   if (argc < 4) {
     printf("Usage: %s <input_file_path>  <output_file_name> -<process_letter> "
-           "<optional_threshold_number_value_if_E_is_chosen> \n",
+           "[-e ? [threshold value] [1-0 for color retantion] : n/a] \n",
            argv[0]);
     printf("\n-----------------------------------------------------\n");
-    printf("-E for sobel's algorithim for edge detection\n");
+    printf("-E for sobel's algorithim for edge detection , threshold, retain "
+           "Color -y-n\n");
     printf("-G for grayscale\n");
     printf("-I for color Inversion\n");
     printf("\n-----------------------------------------------------\n");
@@ -120,14 +124,16 @@ int main(int argc, char *argv[]) {
   }
 
   if (strcmp(argv[3], "-E") == 0) {
-    int threshold = atoi(argv[4]);
-    printf("%d", threshold);
-
-    // Default threshold if not defined;
-    if (!threshold) {
-      threshold = 200;
+    int threshold = 100;
+    int colorRetention = 0;
+    if (argc > 5) {
+      threshold = atoi(argv[4]);
+      if (argc == 6) {
+        colorRetention = atoi(argv[5]);
+      }
     }
-    edgeDetection(image, threshold);
+
+    edgeDetection(image, threshold, colorRetention);
   } else if (strcmp(argv[3], "-I") == 0) {
     colorInversion(image);
   } else if (strcmp(argv[3], "-G") == 0) {
