@@ -10,6 +10,7 @@ typedef struct {
   double velocityX;
   double velocityY;
   float radius;
+  Color color;
 } Particle;
 
 double random_number() {
@@ -18,13 +19,17 @@ double random_number() {
   return floor(rand() % (max - min + 1) + min);
 };
 double random_radius(int min, int max) {
-
   return floor(rand() % (max - min + 1) + min);
 }
 double random_angle() {
   int max = 360;
   int min = 0;
   return (PI / 180) * (rand() % (max - min + 1) + min);
+}
+// RandomColor Generator;
+Color random_color() {
+  return (Color){GetRandomValue(0, 255), GetRandomValue(0, 255),
+                 GetRandomValue(0, 255), 255};
 }
 
 // Chance Generator
@@ -41,9 +46,9 @@ void calculate_attraction(Particle *particle, Particle *otherParticle) {
   double distanceY = otherParticle->posY - particle->posY;
   double magnitude = sqrt(pow(distanceX, 2) + pow(distanceY, 2));
 
-  // Prevent division by zero;
-  if (magnitude < 100) {
-    magnitude = 100;
+  // Prevent division by zero and very high speeds;
+  if (magnitude < 500) {
+    magnitude = 500;
   }
 
   // Calculating Unit Vector
@@ -60,7 +65,7 @@ int main() {
   srand(time(NULL));
   int windowWidth = 1366;
   int windowHeight = 768;
-  int numberOfParticles = 200;
+  int numberOfParticles = 500;
 
   double centerDensityRadius = 300;
 
@@ -89,7 +94,10 @@ int main() {
 
         (windowHeight / 2.0) + (centerDensityRadius * sin(random_angle())),
 
-        0, 0, 2};
+        0,
+        0,
+        2,
+        random_color()};
 
     // particles[i] = (Particle){
     //
@@ -110,7 +118,8 @@ int main() {
     for (int i = 0; i < numberOfParticles; i++) {
       // Draw
       DrawCircle(particles[i].posX, particles[i].posY, particles[i].radius,
-                 WHITE);
+                 particles->color);
+      ;
 
       // calculate_attraction
       for (int j = 0; j < numberOfParticles; j++) {

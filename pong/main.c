@@ -1,5 +1,6 @@
+#include "include/raylib.h"
+#include "include/raymath.h"
 #include <math.h>
-#include <raylib.h>
 #include <stdlib.h>
 #include <time.h>
 
@@ -55,58 +56,63 @@ void ballMovement(struct Ball *ball, float deltaTime, int windowWidth,
     *playerTwoScore = *playerTwoScore + 1;
   }
 };
-int distance_formula(struct Ball *ball, struct Paddle *paddle) {
+int collisionReflection(struct Ball *ball, struct Paddle *paddle) {
 
   long double closestX = ball->x;
   long double closestY = ball->y;
 
-  int collisionXValue = 1;
-  int collisionYValue = 1;
+  Vector2 normalVector = {-1, 0};
 
   if (ball->x < paddle->x) {
-
     closestX = paddle->x;
-
   } else if (ball->x > paddle->x + paddle->width) {
     closestX = paddle->x + paddle->width;
-    collisionXValue = 1;
   }
+  normalVector.x = ball->x - closestX;
 
   if (ball->y < paddle->y) {
-
     closestY = paddle->y;
   } else if (ball->y > paddle->y + paddle->height) {
     closestY = paddle->y + paddle->height;
-
-    collisionYValue = 1;
   }
+  normalVector.y = ball->y - closestY;
 
-  double distance =
-      pow(pow(ball->x - closestX, 2) + pow(ball->y - closestY, 2), 2);
+  // Normalizing the vector
+  double normalVectorMagnitude = sqrt((normalVector.x * normalVector.x) +
+                                      (normalVector.y * normalVector.y));
+
+  normalVector.x /= normalVectorMagnitude;
+  normalVector.y /= normalVectorMagnitude;
+
+  double distance = pow(ball->x - closestX, 2) + pow(ball->y - closestY, 2);
   double ballSquareRadius = pow(ball->radius, 2);
 
+  // Use the standared reflection formula for accurate bounce
+
   if (distance <= ballSquareRadius) {
-    return collisionXValue + collisionYValue;
-  } else {
-    // Do nothing value
-    return 5;
+
+    double basevx = 500;
+    double basevy = 800;
+    double paddleCenterY = paddle->y + paddle->height / 2.0;
+    double rawOffset = ball->y - paddleCenterY;
+    double impactFactor = rawOffset / paddle->height / 2.0;
+
+    // Reflection formula vf = vi -2(v.n)n;
+    Vector2 vi = {ball->velocityX, ball->velocityY};
+    double D = Vector2DotProduct(vi, normalVector);
+    Vector2 VectorToBeSubtracted = Vector2Scale(normalVector, (2 * D));
+    Vector2 vf = Vector2Subtract(vi, VectorToBeSubtracted);
+
+    ball->velocityX = vf.x > 0 ? 1 * basevx : -1 * basevx;
+    ball->velocityY = basevy * impactFactor;
   }
+  return 0;
 };
 
 void paddleBallCollision(struct Ball *ball, struct Paddle *paddle,
                          float deltaTime, int windowWidth, int windowHeight) {
 
-  int result = distance_formula(ball, paddle);
-  if (result == 1) {
-    ball->velocityY *= 1;
-    ball->velocityX *= -1;
-  } else if (result == 2) {
-    ball->velocityY *= 1.2;
-    ball->velocityX *= -1.2;
-  } else if (result == 0) {
-    ball->velocityY *= -1.4;
-    ball->velocityX *= -1.4;
-  }
+  collisionReflection(ball, paddle);
 
   // Limits of speed
   if (ball->velocityX < -ball->velocityLimit) {
@@ -184,10 +190,10 @@ reset:
 
   // Ball
   struct Ball ball = {windowWidth / 2.0, windowHeight / 2.0, 10};
-  ball.velocityX = -200;
-  ball.velocityY = -200;
+  ball.velocityX = GetRandomValue(200, +300);
+  ball.velocityY = GetRandomValue(200, +300);
   // Limits of ball speed;
-  ball.velocityLimit = 500;
+  ball.velocityLimit = 700;
 
   bool isPaused = false;
   while (WindowShouldClose() == false) {
