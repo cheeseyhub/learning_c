@@ -40,9 +40,9 @@ scoop install vscode
 
 
 ## For setting up on  a personal computer(MACOS)
-#### Please remember, if you have already installed git and make, and mingw, you can just  skip the following part. You can also install them individually by yourself. 
+#### The default compiler for macOS, clang, is already installed, and make is also found on macOS systems due to their similarity with Linux.
 
-#### Paste the command below in the terminal and scroll down and follow the image instructions.
+#### Paste the command below in the terminal and scroll down, and follow the image instructions.
 
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
