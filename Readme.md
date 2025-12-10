@@ -124,7 +124,7 @@ scoop install vscode
 
 <img width="782" height="766" alt="image" src="https://github.com/user-attachments/assets/2f3fcc5f-656f-4d71-b9b0-3af100cae68c" />
 
-#### Then type ".\main.exe" to run the file in windows. and for linux only type ./main .
+#### Then type ".\main.exe" to run the file in windows. and for linux and macos only type ./main.
 
 <img width="903" height="656" alt="image" src="https://github.com/user-attachments/assets/3f5980b8-0fed-4b26-bdbb-f98d0e27ff01" />
 
@@ -137,7 +137,7 @@ scoop install vscode
 <img width="700" height="551" alt="image" src="https://github.com/user-attachments/assets/9ba213db-bf26-44b9-b4af-2780726e1878" />
 
 
-#### **After any change to the file you need to compile and run the file again. so open the terminal and type "make windows" then "./main.exe" or you can also press the up arrow key in the terminal to cycle thhrough previous commands.**
+#### **After any change to the file you need to compile and run the file again. so open the terminal and type "make windows" then "./main.exe" or you can also press the up arrow key in the terminal to cycle through previous commands.**
 
 <img width="1042" height="675" alt="image" src="https://github.com/user-attachments/assets/3042fea2-4905-411e-aad9-61a32b77ee85" />
 
