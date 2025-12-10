@@ -19,8 +19,8 @@ scoop bucket add extras
 scoop install vscode
 ```
 
-## For setting up on  a personal computer
-#### Please remember, if you have already installed git and make, and mingw, you can just  skip the following part.
+## For setting up on  a personal computer(windows)
+#### Please remember, if you have already installed git and make, and mingw, you can just  skip the following part. You can also install them individually by yourself. 
 
 #### Paste the command below in PowerShell and scroll down and follow the image instructions.
 
@@ -35,6 +35,20 @@ scoop bucket add extras
 scoop install vscode
  
 ```
+
+
+
+
+## For setting up on  a personal computer(MACOS)
+#### Please remember, if you have already installed git and make, and mingw, you can just  skip the following part. You can also install them individually by yourself. 
+
+#### Paste the command below in the terminal and scroll down and follow the image instructions.
+
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+```
+
 
 ---
 
