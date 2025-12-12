@@ -164,6 +164,7 @@ void enemyPaddleMovement(struct Paddle *playerPaddle, float windowWidth,
 
 int main() {
 
+  // This is label for goto statement
 reset:
   srand(time(NULL));
 
@@ -221,10 +222,9 @@ reset:
       paddleBallCollision(&ball, &playerTwo, deltaTime, windowWidth,
                           windowHeight);
     }
-    BeginDrawing();
-
-    // ClearBackground
     ClearBackground(BLACK);
+
+    BeginDrawing();
 
     // Draw Player
     DrawRectangle(playerOne.x, playerOne.y, playerOne.width, playerOne.height,
@@ -243,7 +243,6 @@ reset:
              WHITE);
 
     if (playerOne.score >= 10) {
-
       DrawText("Player One wins", MeasureText("Player One wins", 70),
                (windowHeight / 2), 70, WHITE);
     }
