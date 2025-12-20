@@ -1,11 +1,11 @@
 # C Projects
-  Here are my labs_practice , and c projects;
- Must have make, gcc, or mingw installed to compile.
+  Here are my labs_practice and C projects; Please take a moment to ⭐ the repo.
+ Must have make, gcc, or mingw installed through a package manager  to compile.
 ## Instruction for installing the library (5.5v)
  
  
 ### Setting  for computer center in university (pieas)(windows).
-#### The proxy may vary depending on the university, so edit as desired. Paste this command below in PowerShell and then scroll down and follow picture instructions.
+#### The proxy may vary depending on the university, so edit as desired. Paste this command below in PowerShell and then scroll down and follow the picture instructions.
 ```
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
